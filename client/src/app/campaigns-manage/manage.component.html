@@ -78,7 +78,8 @@
           <h4 class="card-title">I Gave</h4>
           <h6 class="card-title">Campaign: #{{token.campaign}}</h6>
           <h6 class="card-title">{{token.name}}</h6>
-          <h4 class="card-title">1 / {{token.supply}} </h4>
+          <h4 class="card-title">{{token.supply}} Total</h4>
+          <h4 class="card-title">{{token.remaining}} Remain</h4>
           <h4 class="card-title">{{token.value}} Ether</h4>
           <p class="card-content">
           <button type="submit" class="btn btn-primary" (click)="buyToken(token.campaign, token.index, token.value)">Make this Donation</button>

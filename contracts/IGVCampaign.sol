@@ -2,9 +2,9 @@ pragma solidity 0.4.18;
 
 contract IGVCampaign  {
     Campaign[] campaigns;
-    mapping (uint256 => address) public campaignIndexToOwner;
-    mapping (address => uint256[]) public campaignOwnerToIndexes;
-    mapping (address => uint256) public campaignOwnerTotalCampaigns;
+    mapping (uint256 => address) public campaignIndexToOwner; // Owner for campaign
+    mapping (address => uint256[]) public campaignOwnerToIndexes; // Campaigns for owner
+    mapping (address => uint256) public campaignOwnerTotalCampaigns; // Count of campaigns for owner
     mapping (uint256 => uint256) public campaignEscrowBalance;
     mapping (uint256 => uint256) public campaignBalance;
     mapping (uint256 => Token[]) public campaignTokens;

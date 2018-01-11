@@ -23,8 +23,8 @@ contract IGVCore is IGVAsset {
         founderAddress = msg.sender;
         ownerAddress = msg.sender;
 
-        _createCampaign(0,0, 0, address(0), "Genesis Campaign");
-        _createToken(0, 0, "Genesis Token", 0);
+        _createCampaign(0, 0, 0, address(0), "Genesis Campaign");
+        _createToken(1, 1, "Genesis Token", 0);
         _createCertificate(0, 0, 0, address(0));
     }
 
@@ -91,12 +91,13 @@ contract IGVCore is IGVAsset {
       require(token.remaining > 0);
       //require(msg.value == uint256(token.price));
 
-      //campaignTokensIssued[_campaignId][_tokenIdx] = issued + 1;
+      uint256 issueNumber = token.supply - token.remaining + 1;
+      campaignTokensIssued[_campaignId][_tokenIdx] = issued + 1;
       campaignBalance[_campaignId] += msg.value;
 
       totalRaised += msg.value;
 
-      return _createCertificate(_campaignId, _tokenIdx, 0, msg.sender);
+      return _createCertificate(_campaignId, _tokenIdx, issueNumber, msg.sender);
     }
 
 
@@ -144,6 +145,7 @@ contract IGVCore is IGVAsset {
         returns(
         uint256 campaignId,
         uint64 supply,
+        uint64 remaining,
         string name,
         uint256 price
         ){
@@ -152,6 +154,7 @@ contract IGVCore is IGVAsset {
 
         campaignId = uint256(token.campaignId);
         supply = uint64(token.supply);
+        remaining = uint64(token.remaining);
         name = token.name;
         price = uint256(token.price);
         }

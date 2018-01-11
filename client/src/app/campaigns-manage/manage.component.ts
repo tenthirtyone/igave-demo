@@ -43,7 +43,6 @@ export class ManageCampaignsComponent {
     let instance = await this.igv.deployed();
 
     let c = await instance.getCampaign.call(this.id);
-
     this.campaign = {
       id: this.id,
       startBlock: c[0].toNumber(),
@@ -56,16 +55,16 @@ export class ManageCampaignsComponent {
 
     for (let i = 0; i < t; i++) {
       let t = await instance.getToken(this.id, i);
-      console.log(t[3].toNumber())
+
       this.tokens.push({
         campaign: this.id,
         index: i,
         supply: t[1].toNumber(),
-        name: t[2],
-        value: t[3].toNumber() / 10e18
+        remaining: t[2],
+        name: t[3],
+        value: t[4].toNumber() / 10e18
       })
     }
-    console.log(this.tokens);
   }
 
 

@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
     const totalRaised = await instance.totalRaised();
 
     this.totalSupply = totalSupply.toNumber();
-    this.totalRaised = totalRaised.toNumber();
+    this.totalRaised = totalRaised.toNumber() / 10e17;
     this.totalCampaigns = totalCampaigns.toNumber();
   }
 

@@ -1,8 +1,8 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4 col-lg-3">
-                <div class="card card-profile">
+            <div class="col-md-4 col-lg-3" *ngFor="let token of tokens">
+                                <div class="card card-profile">
                     <div class="card-avatar">
                         <a href="#">
                         <img class="img" src="/assets/img/IGAVE-Ethereum-Blue.png" />
@@ -10,14 +10,13 @@
                     </div>
 
                     <div class="content">
-                        <h6 class="category text-gray">Campaign Name</h6>
-                        <h4 class="card-title">What I Gave</h4>
-                        <h4 class="card-title" *ngIf="startBlock">Start Block: {{startBlock}}</h4>
-                        <h4 class="card-title" *ngIf="endBlock">End Block: {{endBlock}}</h4>
-                        <p class="card-title" *ngIf="owner">{{owner}}</p>
-                        <p class="card-content">
-
-                        </p>
+                        <h6 class="category text-gray"></h6>
+                        <h4 class="card-title">I Gave</h4>
+                        <h6 class="card-title">Campaign: #{{token.campaign}}</h6>
+                        <h6 class="card-title">{{token.name}}</h6>
+                        <h4 class="card-title">{{token.supply}} Total</h4>
+                        <h4 class="card-title">{{token.remaining}} Remain</h4>
+                        <h4 class="card-title">{{token.value}} Ether</h4>
                     </div>
                 </div>
             </div>

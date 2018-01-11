@@ -5,11 +5,11 @@ import "./IGVCampaign.sol";
 // https://github.com/axiomzen/cryptokitties-bounty/blob/e0d9c2c90964b1bbb242d8e3e0d9a7786cf21182/contracts/KittyBase.sol
 contract IGVAssetBase is IGVCampaign{
 
-    event Issue(address indexed owner, uint256 certificateId);
+    event Issue(address indexed purchaser, uint256 certificateId);
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenIdx);
 
     struct Certificate {
-        address owner;
+        address purchaser;
         uint128 campaignId;
         uint64 unitNumber;
         uint16 tokenIdx;
@@ -39,7 +39,7 @@ contract IGVAssetBase is IGVCampaign{
         uint128 _campaignId,
         uint16 _tokenIdx,
         uint64 _unitNumber,
-        address _owner
+        address _purchaser
     )
         internal
         returns (uint)
@@ -49,18 +49,18 @@ contract IGVAssetBase is IGVCampaign{
           campaignId: _campaignId,
           tokenIdx: _tokenIdx,
           unitNumber: _unitNumber,
-          owner: _owner
+          purchaser: _purchaser
         });
 
         campaignTokens[_campaignId][_tokenIdx].remaining--;
         uint256 newCertificateId = certificates.push(_certificate) - 1;
 
         Issue(
-            _owner,
+            _purchaser,
             newCertificateId
         );
 
-        _transfer(0, _owner, newCertificateId);
+        _transfer(0, _purchaser, newCertificateId);
 
         return newCertificateId;
     }
