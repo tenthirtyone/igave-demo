@@ -33,12 +33,19 @@
                 </div>
                 <div class="col-md-12">
                   <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Tax Id</label>
+                    <input type="text" class="form-control"
+                     [value]="taxId" (input)="taxId = $event.target.value">
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
                     <label class="control-label">{{owner}}</label>
                     <input type="text" class="form-control" disabled>
                   </div>
                 </div>
               </div>
-
 
 
               <button type="submit" class="btn btn-primary pull-right" (click)="createCampaign()">Create Campaign</button>
@@ -60,6 +67,7 @@
             <h4 class="card-title">{{campaignName}}</h4>
             <h4 class="card-title" *ngIf="startBlock">Start Block: {{startBlock}}</h4>
             <h4 class="card-title" *ngIf="endBlock">End Block: {{endBlock}}</h4>
+            <h4 class="card-title" *ngIf="taxId">Tax Id: {{taxId}}</h4>
             <p  class="card-title" *ngIf="owner">{{owner}}</p>
             <p class="card-content">
 

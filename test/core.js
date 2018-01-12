@@ -55,11 +55,12 @@ contract('IGVCore', (accounts) => {
     assert.equal(campaign[2], '0x0000000000000000000000000000000000000000');
     assert.equal(campaign[3], 'Genesis Campaign');
   });
+
   it('Has a Genesis Token', async () => {
     const instance = await IGVCore.deployed();
     const token = await instance.getToken(0, 0);
 
-    assert.equal(token[2], 'Genesis Token');
+    assert.equal(token[3], 'Genesis Token');
   });
   it('Has a Genesis Certificate', async () => {
     const instance = await IGVCore.deployed();
@@ -68,12 +69,14 @@ contract('IGVCore', (accounts) => {
     assert.equal(certificate[0].toNumber(), 0);
     assert.equal(certificate[1].toNumber(), 0);
   });
+
   it('Creates a new Campaign', async () => {
     const instance = await IGVCore.deployed();
     await instance.createCampaign(
       10000,
       20000,
       'Test Campaign',
+      '501c-here',
       { from: accounts[0], value: 100000000000 }
     );
 
@@ -93,18 +96,30 @@ contract('IGVCore', (accounts) => {
       1
     );
   });
+
   it('Looks up the token', async () => {
     const instance = await IGVCore.deployed();
     const token = await instance.getToken(1, 0);
 
-    assert.equal(token[2], 'Test Token');
+    assert.equal(token[3], 'Test Token');
   });
   it('Buys the certificate', async () => {
     const instance = await IGVCore.deployed();
     await instance.createCertificate(1,0,
       { from: accounts[0], value: 1 })
 
-    //assert.equal(token[2], 'Test Token');
+  });
+  it('Token supply goes down by 1', async () => {
+    const instance = await IGVCore.deployed();
+    const token = await instance.getToken(1, 0);
+
+    assert.equal(token[2].toNumber(), token[1].toNumber()-1);
+  });
+  it('Certificate purchaser is sender', async () => {
+    const instance = await IGVCore.deployed();
+    const cert = await instance.getCertificate(1);
+
+    assert.equal(cert[3], web3.eth.accounts[0]);
   });
 });
 

@@ -9,7 +9,6 @@ contract IGVCampaign  {
     mapping (uint256 => uint256) public campaignBalance;
     mapping (uint256 => Token[]) public campaignTokens;
     mapping (uint256 => uint64) public campaignTokenCount;
-    mapping (uint256 => uint64[]) public campaignTokensIssued;
 
     event CreateCampaign(address indexed owner, uint256 campaignId);
     event CreateToken(uint256 indexed campaignId, string name);
@@ -19,6 +18,7 @@ contract IGVCampaign  {
         uint256 endBlock;
         address owner;
         string campaignName;
+        string taxId;
         bool veto;
     }
 
@@ -35,7 +35,8 @@ contract IGVCampaign  {
         uint256 _endBlock,
         uint256 _escrowAmount,
         address _owner,
-        string _campaignName
+        string _campaignName,
+        string _taxId
     )
         internal
         returns (uint)
@@ -45,6 +46,7 @@ contract IGVCampaign  {
         endBlock: _endBlock,
         owner: _owner,
         campaignName: _campaignName,
+        taxId: _taxId,
         veto: false
       });
 

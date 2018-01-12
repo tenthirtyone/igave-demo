@@ -3,39 +3,6 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="card card-stats" >
-                        <div class="card-header" data-background-color="igave">
-                            <i class="fab fa-ethereum"></i>
-                        </div>
-                        <div class="card-content">
-                            <p class="category">Ether Raised</p>
-                            <h3 class="title">{{totalRaised}}</h3>
-                        </div>
-                        <div class="card-footer">
-                            <div class="stats">
-                                Total
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="card card-stats" >
-                        <div class="card-header" data-background-color="igave">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="card-content">
-                            <p class="category">Donations Made</p>
-                            <h3 class="title">{{totalSupply}}</h3>
-                        </div>
-                        <div class="card-footer">
-                            <div class="stats">
-                                Average donation
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="card card-stats">
                         <div class="card-header" data-background-color="igave">
                             <i class="material-icons">event</i>
@@ -51,6 +18,41 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats">
+                        <div class="card-header" data-background-color="igave">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="card-content">
+                            <p class="category">Donations Made</p>
+                            <h3 class="title">{{totalSupply}}</h3>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                Average donation
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats" >
+                        <div class="card-header" data-background-color="igave">
+                            <i class="fab fa-ethereum"></i>
+                        </div>
+                        <div class="card-content">
+                            <p class="category">Ether Raised</p>
+                            <h3 class="title">{{totalRaised}}</h3>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                Total
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="card card-stats" >
                         <div class="card-header" data-background-color="igave">
@@ -142,7 +144,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let campaign of upcomingCampaigns" [routerLink]="['/campaigns/view', campaign.id]">
+                                    <tr *ngFor="let campaign of lastCampaigns" [routerLink]="['/campaigns/view', campaign.id]">
                                         <td>{{campaign.id}}</td>
                                         <td>{{campaign.name}}</td>
                                         <td>{{campaign.startBlock}}</td>
@@ -165,22 +167,23 @@
                             <table class="table">
                                 <thead class="primary-text">
                                     <tr>
+                                        <th>Campaign</th>
                                         <th>ID</th>
                                         <th>Name</th>
-                                        <th>Start Block</th>
-                                        <th>End Block</th>
-                                        <th>Ether Raised</th>
+                                        <th>Issue Number</th>
+                                        <th>Remaining</th>
+                                        <th>Price</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let campaign of newestCampaigns" [routerLink]="['/campaigns/view', campaign.id]">
-                                        <td>{{campaign.id}}</td>
-                                        <td>{{campaign.name}}</td>
-                                        <td>{{campaign.startBlock}}</td>
-                                        <td>{{campaign.endBlock}}</td>
-                                        <td class="text-primary"><i class="fab fa-ethereum"></i> 0</td>
+                                    <tr *ngFor="let token of lastTokens" [routerLink]="['/campaigns/view', token.campaignId]">
+                                        <td>{{token.campaignId}}</td>
+                                        <td>{{token.tokenIdx}}</td>
+                                        <td>{{token.tokenName}}</td>
+                                        <td>{{token.issueNumber}}</td>
+                                        <td>{{token.remaining}}</td>
+                                        <td>{{token.price}}</td>
                                     </tr>
-
                                 </tbody>
                             </table>
                         </div>

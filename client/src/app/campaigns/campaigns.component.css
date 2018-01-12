@@ -5,3 +5,8 @@
   float: right;
   bottom: 60px;
 }
+
+[ng-reflect-router-link] {
+  color: #51597e;
+  cursor: pointer;
+}

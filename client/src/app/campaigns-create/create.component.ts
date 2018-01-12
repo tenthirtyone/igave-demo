@@ -18,13 +18,12 @@ export class CreateCampaignsComponent {
   campaignName = '';
   startBlock;
   endBlock;
+  taxId = '';
   owner = '';
 
   constructor(private winRef: WindowRef) {
     this.window = winRef.nativeWindow;
     this.igv = contract(IGVCore);
-
-    console.log(this.window.web3);
 
     this.igv.setProvider(this.window.web3.currentProvider);
     this.owner = this.window.web3.eth.accounts[0];
@@ -35,6 +34,8 @@ export class CreateCampaignsComponent {
     const endBlock = this.endBlock;
     const campaignName = this.campaignName;
     const account = this.window.web3.eth.accounts[0];
+    const taxId = this.taxId;
+
     const window = this.window;
     this.igv.deployed().then(function(instance) {
       const igv = instance;
@@ -42,6 +43,7 @@ export class CreateCampaignsComponent {
         startBlock,
         endBlock,
         campaignName,
+        taxId,
         { from: account, value: 100000000000000000 }
       );
     }).then(function(result) {

@@ -33,7 +33,7 @@ export class MyTokensComponent {
     let instance = await igv.deployed();
 
     instance.Issue({
-      _owner: this.window.web3.eth.accounts[0]
+      purchaser: this.window.web3.eth.accounts[0]
     }, {
       fromBlock: 0,
       toBlock: 'latest'
@@ -42,20 +42,25 @@ export class MyTokensComponent {
       if (result) {
         let id = result.args.certificateId.toNumber();
         const certificate = await instance.getCertificate(id);
+
         let campaignId = certificate[0].toNumber();
         let tokenIdx = certificate[1].toNumber();
+
+        const campaign = await instance.getCampaign(campaignId);
         const token = await instance.getToken(campaignId, tokenIdx);
 
         this.tokens.push({
           campaign: token[0].toNumber(),
+          campaignName: campaign[3],
           supply: token[1].toNumber(),
           remaining: token[2].toNumber(),
           name: token[3],
-          value: token[4].toNumber() / 10e18
+          value: token[4].toNumber() / 10e18,
+          issueNumber: certificate[2].toNumber(),
+          purchaser: certificate[3]
         });
         this.tokens = this.tokens.slice();
       }
-      console.log(this.tokens);
     });
 
   }

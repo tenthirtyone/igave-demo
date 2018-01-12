@@ -43,6 +43,7 @@ export class ManageCampaignsComponent {
     let instance = await this.igv.deployed();
 
     let c = await instance.getCampaign.call(this.id);
+    this.newToken.value = 0;
     this.campaign = {
       id: this.id,
       startBlock: c[0].toNumber(),

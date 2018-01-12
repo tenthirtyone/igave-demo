@@ -18,5 +18,9 @@
   "homepage": "https://github.com/I-Gave",
   "dependencies": {
     "web3": "0.20.3"
+  },
+  "devDependencies": {
+    "eslint": "^4.15.0",
+    "eslint-config-google": "^0.9.1"
   }
 }

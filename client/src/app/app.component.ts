@@ -5,6 +5,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
+import { WindowRef } from './window';
 
 declare const $: any;
 
@@ -17,10 +18,16 @@ export class AppComponent implements OnInit {
     private _router: Subscription;
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
+    private window;
 
     @ViewChild(NavbarComponent) navbar: NavbarComponent;
 
-    constructor( public location: Location, private router: Router) {}
+    constructor(public location: Location, private router: Router, private winRef: WindowRef) {
+        this.window = winRef.nativeWindow;
+        if (!this.window.web3) {
+            this.window.location = "http://metamask.io";
+        }
+    }
 
     ngOnInit() {
         $.material.init();

@@ -10,6 +10,7 @@ contract IGVAssetBase is IGVCampaign{
 
     struct Certificate {
         address purchaser;
+        uint256 timestamp;
         uint128 campaignId;
         uint64 unitNumber;
         uint16 tokenIdx;
@@ -46,6 +47,7 @@ contract IGVAssetBase is IGVCampaign{
     {
 
         Certificate memory _certificate = Certificate({
+          timestamp: block.timestamp,
           campaignId: _campaignId,
           tokenIdx: _tokenIdx,
           unitNumber: _unitNumber,

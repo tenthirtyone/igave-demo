@@ -8,7 +8,7 @@ contract IGVCore is IGVAsset {
     address public founderAddress;
     address public ownerAddress;
 
-    uint public campaignEscrowAmount = 100000000000000000;
+    uint public campaignEscrowAmount = 100000000000000000; // .1 ether
     uint64 public campaignBlockDelay = 1000;
     uint256 public totalRaised = 0;
 
@@ -22,9 +22,10 @@ contract IGVCore is IGVAsset {
 
         founderAddress = msg.sender;
         ownerAddress = msg.sender;
-
-        _createCampaign(0, 0, 0, address(0), "Genesis Campaign");
-        _createToken(1, 1, "Genesis Token", 0);
+        // Cryptokitties did this and I like the hat tip to Satoshi.
+        // Genesis is unspendable/invalid =)
+        _createCampaign(0, 0, 0, address(0), "Genesis Campaign", "");
+        _createToken(0, 1, "Genesis Token", 0);
         _createCertificate(0, 0, 0, address(0));
     }
 
@@ -32,7 +33,8 @@ contract IGVCore is IGVAsset {
     function createCampaign(
         uint256 _startBlock,
         uint256 _endBlock,
-        string _campaignName
+        string _campaignName,
+        string _taxid
     )
       public
       payable
@@ -43,7 +45,7 @@ contract IGVCore is IGVAsset {
       //require((block.number + campaignBlockDelay) <= _startBlock);
       require(_startBlock <= _endBlock);
 
-      return _createCampaign(_startBlock, _endBlock, campaignEscrowAmount, msg.sender, _campaignName);
+      return _createCampaign(_startBlock, _endBlock, campaignEscrowAmount, msg.sender, _campaignName, _taxid);
     }
 
     function createToken(
@@ -91,13 +93,13 @@ contract IGVCore is IGVAsset {
       require(token.remaining > 0);
       //require(msg.value == uint256(token.price));
 
-      uint256 issueNumber = token.supply - token.remaining + 1;
-      campaignTokensIssued[_campaignId][_tokenIdx] = issued + 1;
+      uint64 unitNumber = token.supply - token.remaining + 1;
+
       campaignBalance[_campaignId] += msg.value;
 
       totalRaised += msg.value;
 
-      return _createCertificate(_campaignId, _tokenIdx, issueNumber, msg.sender);
+      return _createCertificate(_campaignId, _tokenIdx, unitNumber, msg.sender);
     }
 
 
@@ -165,13 +167,15 @@ contract IGVCore is IGVAsset {
         returns (
         uint128 campaignId,
         uint16 tokenIdx,
-        address owner
+        uint64 unitNumber,
+        address purchaser
     ) {
         Certificate storage cert = certificates[_id];
 
         campaignId = uint128(cert.campaignId);
         tokenIdx = uint16(cert.tokenIdx);
-        owner = cert.owner;
+        unitNumber = uint16(cert.unitNumber);
+        purchaser = cert.purchaser;
     }
 
     function getTotalCampaigns(address _owner)
