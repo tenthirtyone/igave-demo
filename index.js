@@ -1,5 +1,5 @@
 const Web3 = require('web3');
-const web3 = new Web3(new Web3.providers.HttpProvider("http://45.32.211.99:9545"));
+const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
 const express = require('express');
 const app = express();
 const helmet = require('helmet');
