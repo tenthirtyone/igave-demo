@@ -14,6 +14,7 @@ import { CampaignsComponent } from './campaigns/campaigns.component';
 import { CreateCampaignsComponent } from './campaigns-create/create.component';
 import { ViewCampaignsComponent } from './campaigns-view/view.component';
 import { ManageCampaignsComponent } from './campaigns-manage/manage.component';
+import { EtherFaucetComponent } from './faucet/faucet.component';
 
 import { MyCampaignsComponent } from './mycampaigns/mycampaigns.component';
 import { MyTokensComponent } from './mytokens/mytokens.component';
@@ -34,6 +35,7 @@ import { WindowRef } from './window';
     CreateCampaignsComponent,
     ViewCampaignsComponent,
     ManageCampaignsComponent,
+    EtherFaucetComponent,
     MyCampaignsComponent,
     MyTokensComponent,
     UserProfileComponent,

@@ -12,6 +12,7 @@ declare var $: any;
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
+
 export class ManageCampaignsComponent {
   id = '';
   igv;

@@ -27,7 +27,7 @@ export class MyCampaignsComponent {
 
   async init(igv) {
     let instance = await igv.deployed();
-    let totalCampaigns = await instance.getTotalCampaigns.call(this.window.web3.eth.accounts[0]);
+    let totalCampaigns = await instance.getTotalCampaignsForOwner.call(this.window.web3.eth.accounts[0]);
     totalCampaigns = totalCampaigns.toNumber();
 
     for (let i = 0; i < totalCampaigns; i++) {

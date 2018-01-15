@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import { WindowRef } from '../../window';
 
 @Component({
   selector: 'app-navbar',
@@ -12,16 +13,28 @@ export class NavbarComponent implements OnInit {
     location: Location;
     private toggleButton: any;
     private sidebarVisible: boolean;
+    blockNumber;
+    window;
 
-    constructor(location: Location,  private element: ElementRef) {
-      this.location = location;
-          this.sidebarVisible = false;
+    constructor(location: Location, private element: ElementRef, private winRef: WindowRef) {
+        this.location = location;
+        this.sidebarVisible = false;
+        this.window = winRef.nativeWindow;
     }
 
     ngOnInit(){
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
+        let self = this;
+        this.window.web3.eth.getBlockNumber((err, data) => {
+            self.blockNumber = data;
+        })
+        setInterval(async function() {
+            await this.window.web3.eth.getBlockNumber((err, data) => {
+                self.blockNumber = data;
+            })
+        }, 10000)
     }
 
     sidebarOpen() {

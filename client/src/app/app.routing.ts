@@ -10,6 +10,7 @@ import { ViewCampaignsComponent } from './campaigns-view/view.component';
 import { ManageCampaignsComponent } from './campaigns-manage/manage.component';
 import { MyCampaignsComponent } from './mycampaigns/mycampaigns.component';
 import { MyTokensComponent } from './mytokens/mytokens.component';
+import { EtherFaucetComponent } from './faucet/faucet.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { TableListComponent } from './table-list/table-list.component';
 import { TypographyComponent } from './typography/typography.component';
@@ -73,6 +74,7 @@ const routes: Routes =[
     { path: 'mycampaigns',    component: MyCampaignsComponent },
     { path: 'mytokens',       component: MyTokensComponent },
     { path: 'user-profile',   component: UserProfileComponent },
+    { path: 'ether-faucet',   component: EtherFaucetComponent },
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },
     { path: 'icons',          component: IconsComponent },
