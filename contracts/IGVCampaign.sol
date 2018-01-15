@@ -86,6 +86,7 @@ contract IGVCampaign  {
 
       return tokenIndex;
     }
+
     // -1 Genesis Campaign is not a valid campaign
     function totalCampaigns() public view returns (uint) {
       return campaigns.length - 1;

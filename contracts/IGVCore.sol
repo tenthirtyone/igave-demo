@@ -22,7 +22,7 @@ contract IGVCore is IGVAsset {
 
         founderAddress = msg.sender;
         ownerAddress = msg.sender;
-        // Cryptokitties did this and I like the hat tip to Satoshi.
+
         // Genesis is unspendable/invalid =)
         _createCampaign(0, 0, 0, address(0), "Genesis Campaign", "");
         _createToken(0, 1, "Genesis Token", 0);
@@ -44,6 +44,7 @@ contract IGVCore is IGVAsset {
       require(msg.value == campaignEscrowAmount);
       //require((block.number + campaignBlockDelay) <= _startBlock);
       require(_startBlock <= _endBlock);
+
 
       return _createCampaign(_startBlock, _endBlock, campaignEscrowAmount, msg.sender, _campaignName, _taxid);
     }
@@ -102,14 +103,20 @@ contract IGVCore is IGVAsset {
       return _createCertificate(_campaignId, _tokenIdx, unitNumber, msg.sender);
     }
 
+    function vetoCampaign(uint256 _campaignId) public onlyBy(ownerAddress)  {
+      delete campaigns[_campaignId];
+      campaigns[_campaignId].veto = true;
+      campaigns[_campaignId].owner = ownerAddress;
+
+      Token[] storage tokens = campaignTokens[_campaignId];
+      for (uint i = 0; i < tokens.length; i++) {
+        delete tokens[i];
+      }
+    }
 
     // Escrow
-    function claimEscrow(uint256 _campaignId) public {
-      if (campaignEscrowBalance[_campaignId] == 0) {
-        revert();
-      }
-
-      require(campaignIndexToOwner[_campaignId] == msg.sender);
+    function claimEscrow(uint256 _campaignId) public onlyBy(campaignIndexToOwner[_campaignId]) {
+      require(campaignEscrowBalance[_campaignId] > 0);
 
       Campaign storage campaign = campaigns[_campaignId];
       uint256 endBlock = uint256(campaign.endBlock);
@@ -122,6 +129,12 @@ contract IGVCore is IGVAsset {
       msg.sender.transfer(amount);
     }
 
+    function getEscrowBalance(uint256 _campaignId)
+      public
+      view
+      returns (uint){
+      return campaignEscrowBalance[_campaignId];
+    }
 
     // Views
     function getCampaign(uint256 _id)
@@ -131,7 +144,9 @@ contract IGVCore is IGVAsset {
         uint256 startBlock,
         uint256 endBlock,
         address owner,
-        string campaignName
+        string campaignName,
+        string taxId,
+        bool veto
     ) {
         Campaign storage campaign = campaigns[_id];
 
@@ -139,6 +154,8 @@ contract IGVCore is IGVAsset {
         endBlock = uint256(campaign.endBlock);
         owner = campaign.owner;
         campaignName = campaign.campaignName;
+        taxId = campaign.taxId;
+        veto = campaign.veto;
     }
 
     function getToken(uint256 _campaignId, uint64 _tokenIdx)
@@ -161,6 +178,9 @@ contract IGVCore is IGVAsset {
         price = uint256(token.price);
         }
 
+
+
+
     function getCertificate(uint256 _id)
         public
         view
@@ -178,7 +198,7 @@ contract IGVCore is IGVAsset {
         purchaser = cert.purchaser;
     }
 
-    function getTotalCampaigns(address _owner)
+    function getTotalCampaignsForOwner(address _owner)
       public
       view
       returns (

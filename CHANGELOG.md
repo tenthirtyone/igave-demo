@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## 2011-01-12
+- getEscrowBalance
+- vetoCampaign
+- claimEscrow
+- Removed SafeMath.sol
+
 ## 2011-01-11
 ### Added
 - Dashboard tracking for last campaigns

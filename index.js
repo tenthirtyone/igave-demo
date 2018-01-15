@@ -1,10 +1,30 @@
 const Web3 = require('web3');
-const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
+const web3 = new Web3(new Web3.providers.HttpProvider("http://45.32.211.99:9545"));
+const express = require('express');
+const app = express();
+const helmet = require('helmet');
 
-const abi = require('./build/contracts/IGVCore.json');
+let cache = {};
 
-const contract = web3.eth.contract(abi.abi).at("0x345ca3e014aaf5dca488057592ee47305d9b3e10");
+console.log(web3.eth.accounts);
+console.log(web3.eth.getBalance(web3.eth.accounts[0]).toNumber()/10e18);
 
-contract.CreateCampaign({}, { fromBlock: 0, toBlock: 'latest' }).watch(function (error, result) {
-  console.log(JSON.stringify(result));
-});
+app.use(helmet());
+
+app.get('/faucet/:addr', (req, res) => {
+  console.log('Faucet Sent to: ' + req.params.addr);
+  if (typeof(req.params.addr) !== 'string') {
+    res.send();
+  } else {
+    let addr = req.params.addr;
+    if (!cache[addr]) {
+      cache[addr] = true;
+      web3.eth.sendTransaction({ to: addr, from: web3.eth.accounts[0], value: 1000000000000000000 })
+      res.send(req.params.addr);
+    }
+  }
+})
+
+app.listen(4000, () => {
+  console.log("faucet started");
+})

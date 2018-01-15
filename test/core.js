@@ -87,6 +87,12 @@ contract('IGVCore', (accounts) => {
     assert.equal(campaign[2], accounts[0]);
     assert.equal(campaign[3], 'Test Campaign');
   });
+  it('Checks the escrow balance', async () => {
+    const instance = await IGVCore.deployed();
+    const balance = await instance.getEscrowBalance(1);
+
+    assert.equal(balance.toNumber(), 100000000000);
+  })
   it('Adds tokens to the campaign', async () => {
     const instance = await IGVCore.deployed();
     await instance.createToken(
@@ -120,6 +126,62 @@ contract('IGVCore', (accounts) => {
     const cert = await instance.getCertificate(1);
 
     assert.equal(cert[3], web3.eth.accounts[0]);
+  });
+
+
+  it('Creates a silly Campaign', async () => {
+    const instance = await IGVCore.deployed();
+    await instance.createCampaign(
+      10000,
+      20000,
+      'Silly Campaign',
+      '501c-here',
+      { from: accounts[0], value: 100000000000 }
+    );
+
+    const campaign = await instance.getCampaign(2);
+
+    assert.equal(campaign[0].toNumber(), 10000);
+    assert.equal(campaign[1].toNumber(), 20000);
+    assert.equal(campaign[2], accounts[0]);
+    assert.equal(campaign[3], 'Silly Campaign');
+  });
+  it('Adds tokens to the silly campaign', async () => {
+    const instance = await IGVCore.deployed();
+    await instance.createToken(
+      2,
+      10,
+      'Silly Token',
+      1
+    );
+  });
+  it('Vetoes the silly campaign', async () => {
+    const instance = await IGVCore.deployed();
+    await instance.vetoCampaign(2);
+  });
+  it('Fails to veto from the wrong account', async () => {
+    const instance = await IGVCore.deployed();
+    let error;
+    try {
+      await instance.vetoCampaign(2, {from: web3.eth.accounts[1]});
+    } catch (e) {
+      error = e;
+    }
+
+    assert.isNotNull(error);
+  });
+  it('Checks the silly campaign and token', async () => {
+    const instance = await IGVCore.deployed();
+    const campaign = await instance.getCampaign(2);
+    const token = await instance.getToken(2, 0);
+
+    assert.equal(token[3], '');
+    assert.equal(campaign[3], '');
+  });
+  it('Takes the silly campaign escrow', async () => {
+    const instance = await IGVCore.deployed();
+
+    await instance.claimEscrow(2);
   });
 });
 

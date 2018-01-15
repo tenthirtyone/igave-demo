@@ -1,7 +1,6 @@
 pragma solidity 0.4.18;
 import "./ERC721.sol";
 import "./IGVBase.sol";
-import "./SafeMath.sol";
 
 contract IGVAsset is IGVAssetBase, ERC721 {
 

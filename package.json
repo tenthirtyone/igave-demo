@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/I-Gave",
   "dependencies": {
-    "web3": "0.20.3"
+    "express": "^4.16.2",
+    "helmet": "^3.9.0",
+    "web3": "^0.20.3"
   },
   "devDependencies": {
     "eslint": "^4.15.0",
