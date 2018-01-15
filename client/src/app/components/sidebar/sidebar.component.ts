@@ -14,8 +14,8 @@ export const ROUTES: RouteInfo[] = [
     { path: 'campaigns', title: 'Campaigns',  icon: 'event', class: '', faclass: ''  },
     { path: 'mycampaigns', title: 'My Campaigns', icon: 'content_paste', class: '', faclass: ''  },
     { path: 'user-profile', title: 'My Profile',  icon:'person', class: '', faclass: ''  },
-/*
     { path: 'ether-faucet', title: 'Ether Faucet',  icon:'person', class: '', faclass: 'fas fa-cog'  },
+/*
     { path: 'table-list', title: 'Table List',  icon:'content_paste', class: '', faclass: ''  },
     { path: 'typography', title: 'Typography',  icon:'library_books', class: '', faclass: ''  },
     { path: 'icons', title: 'Icons', icon: 'bubble_chart', class: '', faclass: ''  },
