@@ -16,6 +16,7 @@ export class EtherFaucetComponent {
   constructor(private winRef: WindowRef, http: Http) {
     this.window = winRef.nativeWindow;
     let addr = this.window.web3.eth.accounts[0];
+    console.log(`http://45.76.250.111:4000/faucet/${addr}`);
     http.get(`http://45.76.250.111:4000/faucet/${addr}`).subscribe(data => {
       console.log(data);
     });
