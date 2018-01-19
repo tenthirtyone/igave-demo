@@ -24,6 +24,7 @@ export class MyTokensComponent {
     igv.setProvider(this.window.web3.currentProvider);
     this.changeRef = ref;
     this.init(igv);
+
     setTimeout(() => {
       this.ref.markForCheck();
     }, 1000);
