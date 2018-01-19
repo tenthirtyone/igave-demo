@@ -40,7 +40,7 @@ contract IGVCore is IGVAsset {
       payable
       returns (uint)
     {
-      require(campaigns.length < 5);
+      require(campaigns.length < 6);
       require(msg.value == campaignEscrowAmount);
       //require((block.number + campaignBlockDelay) <= _startBlock);
       require(_startBlock <= _endBlock);
