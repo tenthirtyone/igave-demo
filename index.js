@@ -18,18 +18,18 @@ app.get('/faucet/:addr', (req, res) => {
     let addr = req.params.addr;
     if (!cache[addr]) {
       cache[addr] = true;
-      web3.personal.unlockAccount(web3.eth.accounts[0], 'asdfQWER1234!@#$', 1)
+      web3.personal.unlockAccount(web3.eth.accounts[0], 'asdfQWER1234!@#$', 1);
       web3.eth.sendTransaction({ to: addr, from: web3.eth.accounts[0], value: 1000000000000000000 })
       res.send(req.params.addr);
     }
   }
 })
 
-app.listen(4000, () => {
+app.listen(4001, () => {
   console.log("faucet started");
 })
 
-init()
+init();
 
 async function init() {
 
@@ -38,7 +38,9 @@ async function init() {
 
   let instance = await igv.deployed();
 
-  instance.Issue({}, {
+  instance.Issue({
+    purchaser: "0xb81625dd06ae5ce9cdd1a93376515b730e6e47cd"
+  }, {
       fromBlock: 0,
       toBlock: 'latest'
     }).watch(async (error, result) => {

@@ -34,12 +34,12 @@ export class MyTokensComponent {
     let instance = await igv.deployed();
 
     instance.Issue({
-      purchaser: this.window.web3.eth.accounts[0]
+
     }, {
       fromBlock: 0,
       toBlock: 'latest'
     }).watch(async (error, result) => {
-
+      console.log(result.args)
       if (result) {
         let id = result.args.certificateId.toNumber();
         const certificate = await instance.getCertificate(id);
